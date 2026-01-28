@@ -4,7 +4,7 @@ import { Question } from "../types";
 import { formatPercent, generateDistractors, shuffleArray } from "./gameLogic";
 
 // Initialize Gemini Client
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateAIQuestions = async (count: number = 10): Promise<Question[]> => {
   try {
@@ -58,16 +58,16 @@ export const generateAIQuestions = async (count: number = 10): Promise<Question[
     console.error("AI Generation Error:", error);
     // Fallback batch if AI fails
     const fallback: Question[] = [];
-    for(let i=0; i<count; i++) {
-        const num = Math.floor(Math.random() * 5) + 2;
-        const den = Math.floor(Math.random() * 10) + 11;
-        const percentStr = formatPercent(num, den);
-        const distractors = generateDistractors(num, den, percentStr);
-        fallback.push({
-            fraction: `\\frac{${num}}{${den}}`,
-            percent: percentStr,
-            options: shuffleArray([percentStr, ...distractors])
-        });
+    for (let i = 0; i < count; i++) {
+      const num = Math.floor(Math.random() * 5) + 2;
+      const den = Math.floor(Math.random() * 10) + 11;
+      const percentStr = formatPercent(num, den);
+      const distractors = generateDistractors(num, den, percentStr);
+      fallback.push({
+        fraction: `\\frac{${num}}{${den}}`,
+        percent: percentStr,
+        options: shuffleArray([percentStr, ...distractors])
+      });
     }
     return fallback;
   }
