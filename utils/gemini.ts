@@ -4,7 +4,7 @@ import { Question } from "../types";
 import { formatPercent, generateDistractors, shuffleArray } from "./gameLogic";
 
 // Initialize Gemini Client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 export const generateAIQuestions = async (count: number = 10): Promise<Question[]> => {
   try {
