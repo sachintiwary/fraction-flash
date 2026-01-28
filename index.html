@@ -68,6 +68,22 @@
   </style>
 
   <link rel="stylesheet" href="/index.css">
+  <script>
+    window.addEventListener('error', function (event) {
+      document.body.innerHTML = '<div style="color: red; padding: 20px; font-family: monospace; background: #fff; z-index: 9999; position: absolute; inset: 0;">' +
+        '<h1>Runtime Error</h1>' +
+        '<p><strong>Message:</strong> ' + event.message + '</p>' +
+        '<p><strong>Source:</strong> ' + event.filename + ':' + event.lineno + '</p>' +
+        '<pre>' + event.error?.stack + '</pre>' +
+        '</div>';
+    });
+    window.addEventListener('unhandledrejection', function (event) {
+      document.body.innerHTML = '<div style="color: red; padding: 20px; font-family: monospace; background: #fff; z-index: 9999; position: absolute; inset: 0;">' +
+        '<h1>Unhandled Promise Rejection</h1>' +
+        '<p><strong>Reason:</strong> ' + event.reason + '</p>' +
+        '</div>';
+    });
+  </script>
 </head>
 
 <body>
