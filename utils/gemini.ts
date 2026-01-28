@@ -4,12 +4,12 @@ import { Question } from "../types";
 import { formatPercent, generateDistractors, shuffleArray } from "./gameLogic";
 
 // Initialize Gemini Client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 export const generateAIQuestions = async (count: number = 10): Promise<Question[]> => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-1.5-flash",
       contents: `Generate ${count} distinct fraction problems for mental math practice. 
       Rules:
       1. Denominators between 7 and 25 (e.g., 13, 17, 19, 23).
