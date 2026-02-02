@@ -1,15 +1,24 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { Question } from "../types";
 import { formatPercent, generateDistractors, shuffleArray } from "./gameLogic";
 
-// Initialize Gemini Client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Initialize Gemini Client safely
+// If process.env.API_KEY is undefined (e.g. during build or misconfiguration), 
+// we use a placeholder to prevent the app from crashing immediately on load.
+// The actual API call will fail gracefully later if the key is invalid.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
 
 export const generateAIQuestions = async (count: number = 10): Promise<Question[]> => {
+  // Simple check before making request
+  if (!process.env.API_KEY) {
+    console.warn("API Key is missing. Returning fallback data.");
+    // Fallthrough to catch block logic which generates fallback data
+    return generateFallbackQuestions(count);
+  }
+
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-3-pro-preview",
       contents: `Generate ${count} distinct fraction problems for mental math practice. 
       Rules:
       1. Denominators between 7 and 25 (e.g., 13, 17, 19, 23).
@@ -56,7 +65,11 @@ export const generateAIQuestions = async (count: number = 10): Promise<Question[
     throw new Error("Invalid response structure");
   } catch (error) {
     console.error("AI Generation Error:", error);
-    // Fallback batch if AI fails
+    return generateFallbackQuestions(count);
+  }
+};
+
+const generateFallbackQuestions = (count: number): Question[] => {
     const fallback: Question[] = [];
     for(let i=0; i<count; i++) {
         const num = Math.floor(Math.random() * 5) + 2;
@@ -70,5 +83,4 @@ export const generateAIQuestions = async (count: number = 10): Promise<Question[
         });
     }
     return fallback;
-  }
-};
+}
