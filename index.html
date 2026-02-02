@@ -1,94 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fraction Flash</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <!-- Load KaTeX JS globally -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --font-primary: 'Space Grotesk', sans-serif;
+      }
+      body {
+        font-family: var(--font-primary);
+        background-color: #0f172a; /* Slate 900 */
+        color: #f8fafc;
+        overflow-x: hidden;
+      }
+      
+      /* Premium Gradients */
+      .bg-gradient-premium {
+        background: radial-gradient(circle at 50% 0%, #2e1065 0%, #0f172a 60%);
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fraction Flash</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-    integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
-  <!-- Load KaTeX JS globally -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
-    integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
-    crossorigin="anonymous"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
-  <style>
-    :root {
-      --font-primary: 'Space Grotesk', sans-serif;
-    }
-
-    body {
-      font-family: var(--font-primary);
-      background-color: #0f172a;
-      /* Slate 900 */
-      color: #f8fafc;
-      overflow-x: hidden;
-    }
-
-    /* Premium Gradients */
-    .bg-gradient-premium {
-      background: radial-gradient(circle at 50% 0%, #2e1065 0%, #0f172a 60%);
-    }
-
-    /* 3D Card Utilities */
-    .perspective-1000 {
-      perspective: 1000px;
-    }
-
-    .transform-style-3d {
-      transform-style: preserve-3d;
-    }
-
-    .backface-hidden {
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #0f172a;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
-  </style>
-
-  <link rel="stylesheet" href="/index.css">
-  <script>
-    window.addEventListener('error', function (event) {
-      document.body.innerHTML = '<div style="color: red; padding: 20px; font-family: monospace; background: #fff; z-index: 9999; position: absolute; inset: 0;">' +
-        '<h1>Runtime Error</h1>' +
-        '<p><strong>Message:</strong> ' + event.message + '</p>' +
-        '<p><strong>Source:</strong> ' + event.filename + ':' + event.lineno + '</p>' +
-        '<pre>' + event.error?.stack + '</pre>' +
-        '</div>';
-    });
-    window.addEventListener('unhandledrejection', function (event) {
-      document.body.innerHTML = '<div style="color: red; padding: 20px; font-family: monospace; background: #fff; z-index: 9999; position: absolute; inset: 0;">' +
-        '<h1>Unhandled Promise Rejection</h1>' +
-        '<p><strong>Reason:</strong> ' + event.reason + '</p>' +
-        '</div>';
-    });
-  </script>
+      /* 3D Card Utilities */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      .transform-style-3d {
+        transform-style: preserve-3d;
+      }
+      .backface-hidden {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-
-<body>
-  <div id="root"></div>
+  <body>
+    <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
-
 </html>
